@@ -12,9 +12,9 @@ button{
     background-color: #51C4D3;
     color: rgb(80, 73, 73);
     border-bottom: 7px #053B50 solid;
-    border-left: #526D82;
-    border-right:#526D82;
-    border-top: #526D82;
+    border-left: #51C4D3;
+    border-right:#51C4D3;
+    border-top: #51C4D3;
 }
 
 
@@ -65,4 +65,10 @@ button{
 .operators{
     display: flex;
     flex-direction: column;
+}
+
+.op{
+    background-color: #044660;
+    color: white;
+    border-bottom: 7px #03202c solid
 }
