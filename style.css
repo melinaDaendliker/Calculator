@@ -15,6 +15,7 @@ button{
     border-left: #51C4D3;
     border-right:#51C4D3;
     border-top: #51C4D3;
+    transition: all 0.20s ease;
 }
 
 
@@ -62,6 +63,12 @@ button{
     gap: -2px;
 }
 
+.del{
+    background-color: #6b0d0d;
+    border-bottom: 7px #120101 solid;
+    color: white;
+}
+
 .operators{
     display: flex;
     flex-direction: column;
@@ -70,5 +77,11 @@ button{
 .op{
     background-color: #044660;
     color: white;
-    border-bottom: 7px #03202c solid
+    border-bottom: 7px #03202c solid;
+}
+
+
+.opPressed{
+    border-bottom: 2px #03202c solid;
+    box-shadow: 0 0 0.3rem whitesmoke;
 }
