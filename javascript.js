@@ -1,8 +1,11 @@
 const equal = document.querySelector('#equal');
 const numbers = document.querySelectorAll('.num');
 const operators = document.querySelectorAll('.op');
+const deleteButtons = document.querySelectorAll('.del');
 const calculationDisplay = document.querySelector('.calculation');
 const result = document.querySelector('.solution');
+
+
 // default values
 let operant1 = "";
 let operant2 = "";
@@ -10,17 +13,33 @@ let oper = "";
 let res = 0;
 let display = "";
 
-// delet functions 
+
+
+// single delete function 
+// make sure it also shows on display what is happening 
+
+
+
+
+
+
+
 // + - function
 // percentage function
 // . function
 // press longer calculations than 2 numbers storgage and stuff
-// and what if we add 
+// and what if we add operator directly before getting new number storage needs to be different 
 // division 0 error message
 // add computer kyes to use it also 
 // max length of number 
+// round display for division
+// make code nicer more readable 
 
-
+deleteButtons.forEach(del => del.addEventListener('click', (e) => {
+    if (e.target.id === "deleteAll") {
+        deleteAll();
+    }
+}))
 
 
 operators.forEach(operator => operator.addEventListener("click", (e) => {
@@ -50,13 +69,13 @@ numbers.forEach(number => number.addEventListener("click", (e) => {
 }));
 
 equal.addEventListener('click', (e) => {
-    //operant1 = Number(operant1.join(""));
     operant1 = Number(operant1);
     operant2 = Number(operant2);
     res = calculation(oper,operant1, operant2);
     result.textContent = res;
     calculationDisplay.classList.add('calculationResult')
     
+    // might change later when using longer calculations
     operant1 = "";
     operant2 = "";
     oper = "";
@@ -65,6 +84,19 @@ equal.addEventListener('click', (e) => {
     
     
 })
+
+
+function deleteAll(){
+    operant1 = "";
+    operant2 = "";
+    oper = "";
+    display = ""
+    res = "";
+    result.textContent = "";
+    calculationDisplay.textContent = "";
+    calculationDisplay.classList.remove('calculationResult');
+    //console.log(operant1, operant2, oper, display, res);
+}
 
 
 function displayConversion(oper) {
