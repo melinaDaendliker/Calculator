@@ -47,6 +47,18 @@ button{
 .calculation{
     margin-right: 20px;
     margin-top: 10px;
+    font-size: 36px;
+}
+
+.calculationResult {
+    font-size: 24px;
+    color: gray;
+}
+
+.solution{
+    margin-right: 20px;
+    margin-top: 10px;
+    font-size: 36px;
 }
 
 
