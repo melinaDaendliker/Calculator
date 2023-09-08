@@ -14,16 +14,6 @@ let res = 0;
 let display = "";
 
 
-
-// single delete function 
-// make sure it also shows on display what is happening 
-
-
-
-
-
-
-
 // + - function
 // percentage function
 // . function
@@ -36,8 +26,12 @@ let display = "";
 // make code nicer more readable 
 
 deleteButtons.forEach(del => del.addEventListener('click', (e) => {
+    del.classList.add('opPressed');
+    del.addEventListener('transitionend', removeTransition);
     if (e.target.id === "deleteAll") {
         deleteAll();
+    } else if (e.target.id === 'delete') {
+        deleteNumber();
     }
 }))
 
@@ -85,6 +79,20 @@ equal.addEventListener('click', (e) => {
     
 })
 
+
+function deleteNumber(){
+    if (oper==="" && operant2==="") {
+        operant1 = operant1.slice(0, -1);
+        display = display.slice(0, -1);
+    } else if (operant2==="" && oper!="") {
+        oper = "";
+        display = display.trimEnd().slice(0,-1);
+    } else if (operant2!=""){
+        operant2 = operant2.slice(0, -1);
+        display = display.slice(0, -1);
+    }
+    calculationDisplay.textContent = display
+}
 
 function deleteAll(){
     operant1 = "";
