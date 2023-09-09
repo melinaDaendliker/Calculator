@@ -18,8 +18,7 @@ let equalPressed = 0;
 
 // max length of number 
 // add computer kyes to use it also 
-// make code nicer more readable (get function to evaluate which operant is needed)
-
+// make code nicer more readable
 
 extras.forEach(extra => extra.addEventListener('click', (e) => {
     extra.classList.add('opPressed');
@@ -85,35 +84,19 @@ equal.addEventListener('click', (e) => {
     intermediateResult = res;
     result.textContent = res;
     calculationDisplay.classList.add('calculationResult')
-    
-    operant1 = "";
-    operant2 = "";
-    oper = "";
-    display = ""
-    res = "";
-    numOperators = 0;
+    resetValues();
     equalPressed = 1;
 })
 
 function changePlusMinus(){
     if (intermediateResult!=0) {
         intermediateResult = -1* intermediateResult;
-        console.log(intermediateResult);
+        display =intermediateResult;
      } else if (operant2 === ""){
-        if(Number(operant1>0)){
-            operant1 = -operant1;
-        } 
-        else if(Number(operant1<0)){
-            operant1 = -1 * operant1;
-        }
+        operant1 = -1 * operant1;
         display = operant1;
      } else if (operant2 != "") {
-        if(Number(operant2>0)){
-            operant2 = -operant2;
-        } 
-        else if(Number(operant2<0)){
-            operant2 = -1 * operant2;
-        }
+        operant2 = -1 * operant2;
         display = operant1 + ' ' + oper + ' ' + operant2;
     } 
     calculationDisplay.textContent = display;
@@ -147,16 +130,20 @@ function deleteNumber(){
 }
 
 function deleteAll(){
+    resetValues()
+    equalPressed = 0;
+    result.textContent = "";
+    calculationDisplay.textContent = "";
+    calculationDisplay.classList.remove('calculationResult');
+}
+
+function resetValues() {
     operant1 = "";
     operant2 = "";
     oper = "";
     display = ""
     res = "";
     numOperators = 0;
-    equalPressed = 0;
-    result.textContent = "";
-    calculationDisplay.textContent = "";
-    calculationDisplay.classList.remove('calculationResult');
 }
 
 function calculation(operant, a, b){
