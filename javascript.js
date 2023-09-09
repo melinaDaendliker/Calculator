@@ -120,7 +120,9 @@ function operatorButton(e,operator){
 function equalButton(){
     res = calculation(oper,Number(operant1), Number(operant2));
     intermediateResult = res;
-    result.textContent = res;
+    console.log(operant1);
+    console.log(operant2);
+    result.textContent = roundDecimal(operant1, operant2, res);
     calculationDisplay.classList.add('calculationResult')
     resetValues();
     equalPressed = 1;
@@ -247,6 +249,31 @@ function divide(a,b){
 function power(a) {
     return a**2;
 }
+
+function roundDecimal(operant1, operant2, res){
+   if (typeof operant1 =='number'){
+       operant1= operant1.toString();
+    }
+    let lengthOp1 = 0;
+    let lengthOp2 = 0;
+    if(operant1.indexOf('.')>-1) {
+        let index = operant1.indexOf('.');
+        lengthOp1 = operant1.slice(index+1).length;
+    }
+    if (operant2.indexOf('.')>-1){
+        let index = operant2.indexOf('.');
+        lengthOp2 = operant2.slice(index+1).length;
+    }
+    let maxLength = Math.max(lengthOp1,lengthOp2);
+    if(maxLength==0 && oper=='÷'){
+        return res.toFixed(3);
+    }
+    else if (maxLength==0){
+        return res
+    } else {
+        return res.toFixed(maxLength);
+    }
+    }
 
 function removeTransition(e) {
     if (e.propertyName !== 'box-shadow') return;
