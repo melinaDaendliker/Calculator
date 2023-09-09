@@ -6,6 +6,7 @@ const calculationDisplay = document.querySelector('.calculation');
 const result = document.querySelector('.solution');
 const extras = document.querySelectorAll('.extra');
 
+
 // default values
 let operant1 = "";
 let operant2 = "";
@@ -16,9 +17,16 @@ let display = "";
 let numOperators = 0;
 let equalPressed = 0;
 
+// fix the decimal problem 
 // max length of number 
+
+
 // add computer kyes to use it also 
-// make code nicer more readable
+// make code nicer more readable restructure!!!
+
+// get the key thing and put into function
+// this function deciseds which function has to be called 
+
 
 extras.forEach(extra => extra.addEventListener('click', (e) => {
     extra.classList.add('opPressed');
@@ -61,9 +69,33 @@ operators.forEach(operator => operator.addEventListener("click", (e) => {
     intermediateResult = 0;
     calculationDisplay.textContent = display;
 }));
+
+
+// try it this way tmr
+//const key = document.querySelector(`.key[data-key="${e.code}"]`)
+window.addEventListener('keydown' , (e) => {
+    num = e.key;
+    numbers.forEach(number => console.log(number));
+});
+    
   
 numbers.forEach(number => number.addEventListener("click", (e) => {
-    num = e.target.id;
+   num = e.target.id;
+   numberButtons(num, number)}));
+
+
+equal.addEventListener('click', (e) => {
+    res = calculation(oper,Number(operant1), Number(operant2));
+    intermediateResult = res;
+    result.textContent = res;
+    calculationDisplay.classList.add('calculationResult')
+    resetValues();
+    equalPressed = 1;
+})
+
+
+function numberButtons(num, number) {
+    console.log(number);
     calculationDisplay.classList.remove('calculationResult');
     result.textContent = "";
     number.classList.add('opPressed');
@@ -77,16 +109,7 @@ numbers.forEach(number => number.addEventListener("click", (e) => {
         display += num;
         calculationDisplay.textContent = display;
     } 
-}));
-
-equal.addEventListener('click', (e) => {
-    res = calculation(oper,Number(operant1), Number(operant2));
-    intermediateResult = res;
-    result.textContent = res;
-    calculationDisplay.classList.add('calculationResult')
-    resetValues();
-    equalPressed = 1;
-})
+}
 
 function changePlusMinus(){
     if (intermediateResult!=0) {
@@ -172,7 +195,7 @@ function divide(a,b){
     if (a==0){
         return 'ERROR'
     }
-    return (a / b).toFixed(4); 
+    return a / b; 
 }
 
 function removeTransition(e) {
