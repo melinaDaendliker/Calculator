@@ -15,8 +15,6 @@ let numOperators = 0;
 let equalPressed = 0;
 let keysUsed = false; 
 
-// fix the decimal problem // round all numbers to the amount of digits added
-// max length of number // from 11 digits we show e thing 
 
 window.addEventListener('keydown' , (e) => {
     const key = document.querySelectorAll(`button[data-key="${e.key}"]`)
@@ -40,8 +38,6 @@ buttons.forEach(button => button.addEventListener('click', (e) => {
 
 
 function makeDecision(e, key, button) {
-    //console.log(button);
-    //console.log(key)
     switch(key) {
         case '=' :
             equalButton();
@@ -120,8 +116,6 @@ function operatorButton(e,operator){
 function equalButton(){
     res = calculation(oper,Number(operant1), Number(operant2));
     intermediateResult = res;
-    console.log(operant1);
-    console.log(operant2);
     result.textContent = roundDecimal(operant1, operant2, res);
     calculationDisplay.classList.add('calculationResult')
     resetValues();
@@ -129,6 +123,11 @@ function equalButton(){
 }
 
 function numberButtons(num, number) {
+    console.log(display);
+    if (display.length > 20){
+        alert('You reached the limit of Numbers')
+        return
+    }
     calculationDisplay.classList.remove('calculationResult');
     result.textContent = '';
     number.classList.add('opPressed');
