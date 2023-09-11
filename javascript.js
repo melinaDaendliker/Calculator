@@ -15,12 +15,8 @@ let numOperators = 0;
 let equalPressed = 0;
 let keysUsed = false; 
 
-// fix the decimal problem 
-// max length of number 
-
-// make code nicer more readable restructure!!!
-// this function deciseds which function has to be called 
-
+// fix the decimal problem // round all numbers to the amount of digits added
+// max length of number // from 11 digits we show e thing 
 
 window.addEventListener('keydown' , (e) => {
     const key = document.querySelectorAll(`button[data-key="${e.key}"]`)
