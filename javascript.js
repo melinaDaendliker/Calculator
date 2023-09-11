@@ -16,6 +16,7 @@ let intermediateResult = 0;
 let display = "";
 let numOperators = 0;
 let equalPressed = 0;
+let keysUsed = false; 
 
 // fix the decimal problem 
 // max length of number 
@@ -28,74 +29,131 @@ let equalPressed = 0;
 // this function deciseds which function has to be called 
 
 
+window.addEventListener('keydown' , (e) => {
+    const key = document.querySelectorAll(`button[data-key="${e.key}"]`)
+    keysUsed = true
+    let keyPressed = e.key;
+    let buttonPressed = key[0];
+    if (keyPressed=='/'){
+        keyPressed = '÷'
+
+    } else if (keyPressed=='*'){
+        keyPressed = '×'}
+    //console.log(key)
+    //console.log(keyPressed);
+    //console.log(buttonPressed)
+    makeDecision(e, keyPressed, buttonPressed);
+    keysUsed = false
+});
+    
+operators.forEach(operator => operator.addEventListener("click", (e) => {12
+    operatorButton(e,operator)}));
+numbers.forEach(number => number.addEventListener("click", (e) => {
+   num = e.target.id;
+   numberButtons(num, number)}));
+equal.addEventListener('click', (e) => { equalButton(e)});
+deleteButtons.forEach(del => del.addEventListener('click', (e) => {
+    num = e.target.id;
+    deleteButton(num, del);
+}))
+
 extras.forEach(extra => extra.addEventListener('click', (e) => {
-    extra.classList.add('opPressed');
-    extra.addEventListener('transitionend', removeTransition);
-    if(e.target.id === 'plusMinus') {
+    num = e.target.id;
+    extraOperations(num, extra);
+  }))
+  
+
+
+
+
+function makeDecision(e, key, button) {
+    //console.log(button);
+    //console.log(key)
+    switch(key) {
+        case '=' :
+            equalButton();
+            break;
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7': 
+        case '8':
+        case '9': 
+            numberButtons(key, button);
+            break;
+        case '+' :
+        case '-' :
+        case '×' :
+        case '÷' :
+        case '^2':
+            operatorButton(e,button);
+            break;
+        case 'Delete': 
+        case 'Backspace':
+            deleteButton(key, button);
+            break;
+        case '.':
+        case 'plusMinus':
+            extraOperations(key, button);
+    };
+}
+
+function extraOperations(key, button){
+    button.classList.add('opPressed');
+    button.addEventListener('transitionend', removeTransition);
+    if(key === 'plusMinus') {
         changePlusMinus();
-    } else if (e.target.id === 'dot') {
+    } else if (key === '.') {
         addDot();
     }
-}))
+}
 
-deleteButtons.forEach(del => del.addEventListener('click', (e) => {
-    del.classList.add('opPressed');
-    del.addEventListener('transitionend', removeTransition);
-    if (e.target.id === "deleteAll") {
+function deleteButton(key, button){
+    button.classList.add('opPressed');
+    button.addEventListener('transitionend', removeTransition);
+    if (key === "Delete") {
         deleteAll();
-    } else if (e.target.id === 'delete') {
+    } else if (key === 'Backspace') {
         deleteNumber();
     }
-}))
+}
 
-operators.forEach(operator => operator.addEventListener("click", (e) => {
+function operatorButton(e,operator){
     numOperators ++;
     operator.classList.add('opPressed');
     operator.addEventListener('transitionend', removeTransition); 
     if (numOperators>1) {
         res = calculation(oper,Number(operant1), Number(operant2));
-        oper = e.target.id; 
+        oper = getOperant(e); 
         operant1 = res;
         operant2 = '';
         display = res + ' ' + oper + ' ';
-    } else if (equalPressed==1 && numOperators==1){
-        oper = e.target.id;  
+    } else if (equalPressed==1 && numOperators==1){        
+        oper = getOperant(e);  
         operant1 = intermediateResult;
         display = intermediateResult + ' ' + oper + ' ';
     } else if (numOperators==1){
-        oper = e.target.id;  
+        oper = getOperant(e);  
         display += ' ' + oper + ' ';
     }
     intermediateResult = 0;
     calculationDisplay.textContent = display;
-}));
+}
 
-
-// try it this way tmr
-//const key = document.querySelector(`.key[data-key="${e.code}"]`)
-window.addEventListener('keydown' , (e) => {
-    num = e.key;
-    numbers.forEach(number => console.log(number));
-});
-    
-  
-numbers.forEach(number => number.addEventListener("click", (e) => {
-   num = e.target.id;
-   numberButtons(num, number)}));
-
-
-equal.addEventListener('click', (e) => {
+function equalButton(){
     res = calculation(oper,Number(operant1), Number(operant2));
     intermediateResult = res;
     result.textContent = res;
     calculationDisplay.classList.add('calculationResult')
     resetValues();
     equalPressed = 1;
-})
-
+}
 
 function numberButtons(num, number) {
-    console.log(number);
     calculationDisplay.classList.remove('calculationResult');
     result.textContent = "";
     number.classList.add('opPressed');
@@ -114,7 +172,7 @@ function numberButtons(num, number) {
 function changePlusMinus(){
     if (intermediateResult!=0) {
         intermediateResult = -1* intermediateResult;
-        display =intermediateResult;
+        display = intermediateResult;
      } else if (operant2 === ""){
         operant1 = -1 * operant1;
         display = operant1;
@@ -144,6 +202,7 @@ function deleteNumber(){
         display = display.slice(0, -1);
     } else if (operant2==="" && oper!="") {
         oper = "";
+        numOperators = 0;
         display = display.trimEnd().slice(0,-1);
     } else if (operant2!=""){
         operant2 = operant2.slice(0, -1);
@@ -155,6 +214,7 @@ function deleteNumber(){
 function deleteAll(){
     resetValues()
     equalPressed = 0;
+    intermediateResult = 0;
     result.textContent = "";
     calculationDisplay.textContent = "";
     calculationDisplay.classList.remove('calculationResult');
@@ -171,7 +231,7 @@ function resetValues() {
 
 function calculation(operant, a, b){
     switch(operant) {
-        case '+' : return add(a,b);
+        case '+' : return addition(a,b);
         case '-' : return subtract(a,b);
         case '×' : return multiply(a,b);
         case '÷' : return divide(a,b);
@@ -179,7 +239,20 @@ function calculation(operant, a, b){
     };
 }
 
-function add(a,b) {
+function getOperant(e) {
+    if (keysUsed){
+        let thing = e.key;
+        if (thing=='/'){
+            return '÷';
+        }else if (thing=='*'){
+            return '×';
+        }else return thing;
+     } else {
+         return e.target.id;
+     }
+}
+
+function addition(a,b) {
     return a + b;
 }
 
@@ -198,11 +271,11 @@ function divide(a,b){
     return a / b; 
 }
 
+function power(a) {
+    return a**2;
+}
+
 function removeTransition(e) {
     if (e.propertyName !== 'box-shadow') return;
     e.target.classList.remove('opPressed');
   }
-
-function power(a) {
-    return a**2;
-}
