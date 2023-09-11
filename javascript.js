@@ -1,19 +1,16 @@
-const equal = document.querySelector('#equal');
-const numbers = document.querySelectorAll('.num');
-const operators = document.querySelectorAll('.op');
-const deleteButtons = document.querySelectorAll('.del');
+const buttons = document.querySelectorAll('button');
 const calculationDisplay = document.querySelector('.calculation');
 const result = document.querySelector('.solution');
 const extras = document.querySelectorAll('.extra');
 
 
 // default values
-let operant1 = "";
-let operant2 = "";
-let oper = "";
+let operant1 = '';
+let operant2 = '';
+let oper = '';
 let res = 0;
 let intermediateResult = 0;
-let display = "";
+let display = '';
 let numOperators = 0;
 let equalPressed = 0;
 let keysUsed = false; 
@@ -21,11 +18,7 @@ let keysUsed = false;
 // fix the decimal problem 
 // max length of number 
 
-
-// add computer kyes to use it also 
 // make code nicer more readable restructure!!!
-
-// get the key thing and put into function
 // this function deciseds which function has to be called 
 
 
@@ -39,31 +32,15 @@ window.addEventListener('keydown' , (e) => {
 
     } else if (keyPressed=='*'){
         keyPressed = '×'}
-    //console.log(key)
-    //console.log(keyPressed);
-    //console.log(buttonPressed)
     makeDecision(e, keyPressed, buttonPressed);
     keysUsed = false
 });
-    
-operators.forEach(operator => operator.addEventListener("click", (e) => {12
-    operatorButton(e,operator)}));
-numbers.forEach(number => number.addEventListener("click", (e) => {
-   num = e.target.id;
-   numberButtons(num, number)}));
-equal.addEventListener('click', (e) => { equalButton(e)});
-deleteButtons.forEach(del => del.addEventListener('click', (e) => {
-    num = e.target.id;
-    deleteButton(num, del);
+
+
+buttons.forEach(button => button.addEventListener('click', (e) => {
+    key = e.target.id;
+    makeDecision(e,key,button);
 }))
-
-extras.forEach(extra => extra.addEventListener('click', (e) => {
-    num = e.target.id;
-    extraOperations(num, extra);
-  }))
-  
-
-
 
 
 function makeDecision(e, key, button) {
@@ -115,7 +92,7 @@ function extraOperations(key, button){
 function deleteButton(key, button){
     button.classList.add('opPressed');
     button.addEventListener('transitionend', removeTransition);
-    if (key === "Delete") {
+    if (key === 'Delete') {
         deleteAll();
     } else if (key === 'Backspace') {
         deleteNumber();
@@ -155,14 +132,14 @@ function equalButton(){
 
 function numberButtons(num, number) {
     calculationDisplay.classList.remove('calculationResult');
-    result.textContent = "";
+    result.textContent = '';
     number.classList.add('opPressed');
     number.addEventListener('transitionend', removeTransition);
-    if (oper===""){
+    if (oper===''){
         operant1 += num;
         display += num;
         calculationDisplay.textContent = display;
-    } else if (oper!="") {
+    } else if (oper!='') {
         operant2 += num;
         display += num;
         calculationDisplay.textContent = display;
@@ -173,10 +150,10 @@ function changePlusMinus(){
     if (intermediateResult!=0) {
         intermediateResult = -1* intermediateResult;
         display = intermediateResult;
-     } else if (operant2 === ""){
+     } else if (operant2 === ''){
         operant1 = -1 * operant1;
         display = operant1;
-     } else if (operant2 != "") {
+     } else if (operant2 != '') {
         operant2 = -1 * operant2;
         display = operant1 + ' ' + oper + ' ' + operant2;
     } 
@@ -197,14 +174,14 @@ function addDot(){
 }
 
 function deleteNumber(){
-    if (oper==="" && operant2==="") {
+    if (oper==='' && operant2==='') {
         operant1 = operant1.slice(0, -1);
         display = display.slice(0, -1);
-    } else if (operant2==="" && oper!="") {
-        oper = "";
+    } else if (operant2==='' && oper!='') {
+        oper = '';
         numOperators = 0;
         display = display.trimEnd().slice(0,-1);
-    } else if (operant2!=""){
+    } else if (operant2!=''){
         operant2 = operant2.slice(0, -1);
         display = display.slice(0, -1);
     }
@@ -215,17 +192,17 @@ function deleteAll(){
     resetValues()
     equalPressed = 0;
     intermediateResult = 0;
-    result.textContent = "";
-    calculationDisplay.textContent = "";
+    result.textContent = '';
+    calculationDisplay.textContent = '';
     calculationDisplay.classList.remove('calculationResult');
 }
 
 function resetValues() {
-    operant1 = "";
-    operant2 = "";
-    oper = "";
-    display = ""
-    res = "";
+    operant1 = '';
+    operant2 = '';
+    oper = '';
+    display = ''
+    res = '';
     numOperators = 0;
 }
 
@@ -235,7 +212,7 @@ function calculation(operant, a, b){
         case '-' : return subtract(a,b);
         case '×' : return multiply(a,b);
         case '÷' : return divide(a,b);
-        case  '^2' : return power(a)
+        case '^2' : return power(a)
     };
 }
 
